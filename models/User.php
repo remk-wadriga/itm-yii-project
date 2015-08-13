@@ -6,7 +6,7 @@ use Yii;
 use abstracts\ModelAbstract;
 use yii\web\IdentityInterface;
 use account\interfaces\UserAuthInterface;
-use interfaces\AuthEventHandlerInterface;
+use yii\web\UserEvent;
 
 /**
  * This is the model class for table "user".
@@ -30,7 +30,7 @@ use interfaces\AuthEventHandlerInterface;
  * @property string $lastVisitDate
  * @property string $password
  */
-class User extends ModelAbstract implements IdentityInterface, UserAuthInterface, AuthEventHandlerInterface
+class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
 {
     public static function tableName()
     {
@@ -74,10 +74,11 @@ class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
 
     // Event handlers
 
-    public function afterSuccessLogin()
+    public static function afterSuccessLogin(UserEvent $event)
     {
-        $this->lastVisitDate = Yii::$app->timeService->getCurrentDateTime();
-        return $this->update(false, ['last_visit_date']);
+        $id = $event->identity->getId();
+        $dateTime = Yii::$app->timeService->getCurrentDateTime();
+        return Yii::$app->db->createCommand()->update(self::tableName(), ['last_visit_date' => $dateTime], ['id' => $id])->execute();
     }
 
     // END Event handlers

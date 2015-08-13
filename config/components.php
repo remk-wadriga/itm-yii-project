@@ -7,6 +7,8 @@
  * Time: 12:27 PM
  */
 
+use components\UserService;
+
 $db = require(__DIR__ . '/db.php');
 $routes = require(__DIR__ . '/routes.php');
 
@@ -50,10 +52,10 @@ return [
         'class' => 'components\TimeService',
     ],
     'user' => [
-        'class' => 'components\UserService',
+        'class' => UserService::className(),
         'identityClass' => 'models\User',
         'enableAutoLogin' => true,
-        'on ' . USER_SUCCESS_LOGIN_EVENT => ['components\UserService', 'afterSuccessLogin'],
+        'on ' . UserService::EVENT_AFTER_LOGIN => ['models\User', 'afterSuccessLogin'],
     ],
     'view' => [
         'class' => 'components\View',
