@@ -1,4 +1,5 @@
 <?php
+define('USER_SUCCESS_LOGIN_EVENT', 'eventSuccessLogin');
 
 $namespaces = require(__DIR__ . '/namespaces.php');
 foreach($namespaces as $alias => $path){

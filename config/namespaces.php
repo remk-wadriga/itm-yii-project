@@ -14,4 +14,5 @@ return [
     'commands' => 'commands',
     'components' => 'components',
     'models' => 'models',
+    'interfaces' => 'interfaces',
 ];

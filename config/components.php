@@ -53,6 +53,7 @@ return [
         'class' => 'components\UserService',
         'identityClass' => 'models\User',
         'enableAutoLogin' => true,
+        'on ' . USER_SUCCESS_LOGIN_EVENT => ['components\UserService', 'afterSuccessLogin'],
     ],
     'view' => [
         'class' => 'components\View',
