@@ -7,7 +7,7 @@
  * Time: 17:34 PM
  */
 
-namespace app\abstracts;
+namespace abstracts;
 
 use yii\web\AssetBundle;
 

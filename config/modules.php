@@ -9,6 +9,6 @@
 
 return [
     'account' => [
-        'class' => 'app\modules\account\AccountModule'
+        'class' => 'account\AccountModule'
     ],
 ];

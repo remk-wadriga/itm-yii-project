@@ -47,14 +47,14 @@ return [
     'db' => $db,
 
     'timeService' => [
-        'class' => 'app\components\TimeService',
+        'class' => 'components\TimeService',
     ],
     'user' => [
-        'class' => 'app\components\UserService',
-        'identityClass' => 'app\models\User',
+        'class' => 'components\UserService',
+        'identityClass' => 'models\User',
         'enableAutoLogin' => true,
     ],
     'view' => [
-        'class' => 'app\components\View',
+        'class' => 'components\View',
     ],
 ];

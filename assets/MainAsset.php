@@ -5,9 +5,9 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace app\assets;
+namespace assets;
 
-use app\abstracts\AssetAbstract;
+use abstracts\AssetAbstract;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>

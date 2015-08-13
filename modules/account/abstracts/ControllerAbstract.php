@@ -7,10 +7,10 @@
  * Time: 13:43 PM
  */
 
-namespace app\modules\account\abstracts;
+namespace account\abstracts;
 
 use Yii;
-use app\abstracts\ControllerAbstract as Controller;
+use abstracts\ControllerAbstract as Controller;
 
 abstract class ControllerAbstract extends Controller
 {

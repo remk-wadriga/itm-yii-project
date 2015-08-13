@@ -7,7 +7,7 @@
  * Time: 13:09 PM
  */
 
-namespace app\abstracts;
+namespace abstracts;
 
 use Yii;
 use yii\web\Controller;

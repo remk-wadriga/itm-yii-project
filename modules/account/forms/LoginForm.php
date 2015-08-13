@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\account\forms;
+namespace account\forms;
 
 use Yii;
-use app\abstracts\FormAbstract;
-use app\modules\account\interfaces\UserAuthInterface;
+use abstracts\FormAbstract;
+use account\interfaces\UserAuthInterface;
 
 /**
  * LoginForm is the model behind the login form.

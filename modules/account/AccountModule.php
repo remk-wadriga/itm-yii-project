@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\account;
+namespace account;
 
-use yii\base\Module;
+use abstracts\ModuleAbstract;
 
-class AccountModule extends Module
+class AccountModule extends ModuleAbstract
 {
-    public $controllerNamespace = 'app\modules\account\controllers';
+    public $controllerNamespace = 'account\controllers';
 
     public function init()
     {

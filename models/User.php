@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace models;
 
 use Yii;
-use app\abstracts\ModelAbstract;
+use abstracts\ModelAbstract;
 use yii\web\IdentityInterface;
-use app\modules\account\interfaces\UserAuthInterface;
+use account\interfaces\UserAuthInterface;
 
 /**
  * This is the model class for table "user".

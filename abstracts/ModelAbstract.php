@@ -7,7 +7,7 @@
  * Time: 14:11 PM
  */
 
-namespace app\abstracts;
+namespace abstracts;
 
 use yii\db\ActiveRecord;
 

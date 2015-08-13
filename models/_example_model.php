@@ -7,7 +7,7 @@
  * Time: 14:20 PM
  */
 
-namespace app\models;
+namespace models;
 
 
 class _example_model

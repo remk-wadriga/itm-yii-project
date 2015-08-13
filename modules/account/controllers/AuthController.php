@@ -7,12 +7,12 @@
  * Time: 15:56 PM
  */
 
-namespace app\modules\account\controllers;
+namespace account\controllers;
 
 use Yii;
-use app\modules\account\abstracts\ControllerAbstract;
-use app\modules\account\forms\LoginForm;
-use app\modules\account\forms\RegisterForm;
+use account\abstracts\ControllerAbstract;
+use account\forms\LoginForm;
+use account\forms\RegisterForm;
 
 class AuthController extends ControllerAbstract
 {

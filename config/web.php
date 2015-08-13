@@ -1,5 +1,11 @@
 <?php
 
+$namespaces = require(__DIR__ . '/namespaces.php');
+foreach($namespaces as $alias => $path){
+    Yii::setAlias('@' . $alias, __DIR__ . '/../' . $path);
+}
+
+
 $params = require(__DIR__ . '/params.php');
 $components = require(__DIR__ . '/components.php');
 $modules = require(__DIR__ . '/modules.php');

@@ -7,7 +7,7 @@
  * Time: 14:34 PM
  */
 
-namespace app\components;
+namespace components;
 
 use Yii;
 use yii\web\User;

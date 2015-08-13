@@ -3,16 +3,15 @@
  * Created by Rem.
  * Author: Dmitry Kushneriv
  * Email: remkwadriga@yandex.ua
- * Date: 12-08-2015
- * Time: 16:02 PM
+ * Date: 13-08-2015
+ * Time: 15:32 PM
  */
 
 namespace abstracts;
 
-use Yii;
-use yii\base\Model;
+use yii\base\Module;
 
-abstract class FormAbstract extends Model
+class ModuleAbstract extends Module
 {
 
 }

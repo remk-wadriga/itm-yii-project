@@ -7,7 +7,7 @@
  * Time: 15:59 PM
  */
 
-namespace app\components;
+namespace components;
 
 use yii\web\View as YiiView;
 

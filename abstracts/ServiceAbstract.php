@@ -7,7 +7,7 @@
  * Time: 14:28 PM
  */
 
-namespace app\abstracts;
+namespace abstracts;
 
 use yii\base\Component;
 

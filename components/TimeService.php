@@ -7,10 +7,10 @@
  * Time: 14:27 PM
  */
 
-namespace app\components;
+namespace components;
 
 use Yii;
-use app\abstracts\ServiceAbstract;
+use abstracts\ServiceAbstract;
 
 class TimeService extends ServiceAbstract
 {

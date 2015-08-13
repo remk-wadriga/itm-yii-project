@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\account\controllers;
+namespace account\controllers;
 
-use app\modules\account\abstracts\ControllerAbstract;
+use account\abstracts\ControllerAbstract;
 
 class IndexController extends ControllerAbstract
 {

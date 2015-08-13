@@ -3,11 +3,11 @@
 namespace app\controllers;
 
 use Yii;
-use app\abstracts\ControllerAbstract;
+use abstracts\ControllerAbstract;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use models\LoginForm;
+use models\ContactForm;
 
 class SiteController extends ControllerAbstract
 {

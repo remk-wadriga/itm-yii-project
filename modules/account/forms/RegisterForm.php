@@ -7,11 +7,11 @@
  * Time: 16:18 PM
  */
 
-namespace app\modules\account\forms;
+namespace account\forms;
 
 use Yii;
-use app\abstracts\FormAbstract;
-use app\modules\account\interfaces\UserAuthInterface;
+use abstracts\FormAbstract;
+use account\interfaces\UserAuthInterface;
 
 class RegisterForm extends FormAbstract
 {

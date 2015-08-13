@@ -6,8 +6,8 @@
  * Date: 12-08-2015
  * Time: 15:57 PM
  *
- * @var \app\components\View $this
- * @var \app\modules\account\forms\RegisterForm $model
+ * @var \components\View $this
+ * @var \account\forms\RegisterForm $model
  */
 
 use yii\helpers\Html;

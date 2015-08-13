@@ -7,7 +7,7 @@
  * Time: 16:05 PM
  */
 
-namespace app\modules\account\interfaces;
+namespace account\interfaces;
 
 
 interface UserAuthInterface
