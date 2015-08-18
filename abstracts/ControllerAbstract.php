@@ -11,9 +11,22 @@ namespace abstracts;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 
 abstract class ControllerAbstract extends Controller
 {
+    public function beforeAction($action)
+    {
+        if (parent::beforeAction($action)) {
+            if (Yii::$app->user->can($action->id)) {
+                throw new ForbiddenHttpException('Access denied');
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * render
      * @param null $view

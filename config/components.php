@@ -60,4 +60,7 @@ return [
     'view' => [
         'class' => 'components\View',
     ],
+    'authManager' => [
+        'class' => 'components\AuthManager',
+    ],
 ];

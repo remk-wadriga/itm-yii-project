@@ -15,4 +15,5 @@ return [
     'components' => 'components',
     'models' => 'models',
     'interfaces' => 'interfaces',
+    'rbac' => 'rbac',
 ];
