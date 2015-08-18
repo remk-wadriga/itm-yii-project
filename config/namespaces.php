@@ -9,6 +9,7 @@
 
 return [
     'account' => 'modules/account',
+    'landing' => 'modules/landing',
     'abstracts' => 'abstracts',
     'assets' => 'assets',
     'commands' => 'commands',

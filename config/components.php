@@ -17,11 +17,11 @@ return [
         // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
         'cookieValidationKey' => 'hvb6xPBhQBgSjo2TsfOSOoAsKfSguOri',
     ],
+    'errorHandler' => [
+        //'errorAction' => 'landing/error',
+    ],
     'cache' => [
         'class' => 'yii\caching\FileCache',
-    ],
-    'errorHandler' => [
-        'errorAction' => 'site/error',
     ],
     'mailer' => [
         'class' => 'yii\swiftmailer\Mailer',

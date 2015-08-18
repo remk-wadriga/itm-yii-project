@@ -11,8 +11,9 @@ namespace app\commands;
 
 use Yii;
 use yii\console\Controller;
-use rbac\UserGroupRule;
 use components\AuthManager;
+use rbac\AccountRule;
+use rbac\LandingRule;
 
 class RbacController extends Controller
 {
@@ -21,69 +22,67 @@ class RbacController extends Controller
         $authManager = Yii::$app->authManager;
 
         // Create roles
-        $guest = $authManager->createRole(AuthManager::ROLE_GUEST);
-        $user = $authManager->createRole(AuthManager::ROLE_USER);
+        $guest  = $authManager->createRole(AuthManager::ROLE_GUEST);
+        $user  = $authManager->createRole(AuthManager::ROLE_USER);
         $manager = $authManager->createRole(AuthManager::ROLE_MANAGER);
-        $admin = $authManager->createRole(AuthManager::ROLE_ADMIN);
+        $admin  = $authManager->createRole(AuthManager::ROLE_ADMIN);
 
-        // Create simple, based on action{$NAME} permissions
-        $login  = $authManager->createPermission('login');
-        $logout = $authManager->createPermission('logout');
-        $error  = $authManager->createPermission('error');
-        $signUp = $authManager->createPermission('register');
-        $index  = $authManager->createPermission('index');
-        $list  = $authManager->createPermission('list');
-        $view   = $authManager->createPermission('view');
-        $update = $authManager->createPermission('update');
-        $delete = $authManager->createPermission('delete');
-
-        // Add permissions in Yii::$app->authManager
-        $authManager->add($login);
-        $authManager->add($logout);
-        $authManager->add($error);
-        $authManager->add($signUp);
-        $authManager->add($index);
-        $authManager->add($list);
-        $authManager->add($view);
-        $authManager->add($update);
-        $authManager->add($delete);
-
-        // Add rule, based on UserExt->group === $user->group
-        $userGroupRule = new UserGroupRule();
-        $authManager->add($userGroupRule);
-
-        // Add rule "UserGroupRule" in roles
-        $guest->ruleName  = $userGroupRule->name;
-        $user->ruleName  = $userGroupRule->name;
-        $manager->ruleName = $userGroupRule->name;
-        $admin->ruleName  = $userGroupRule->name;
-
-        // Add roles in Yii::$app->authManager
         $authManager->add($guest);
         $authManager->add($user);
         $authManager->add($manager);
         $authManager->add($admin);
 
-        // Add permission-per-role in Yii::$app->authManager
-        // GUEST
-        $authManager->addChild($guest, $login);
-        $authManager->addChild($guest, $logout);
-        $authManager->addChild($guest, $error);
-        $authManager->addChild($guest, $signUp);
-        $authManager->addChild($guest, $index);
-        $authManager->addChild($guest, $list);
-        $authManager->addChild($guest, $view);
+        // Account module rules
+        $accountRule = new AccountRule();
+        $authManager->add($accountRule);
 
-        // USER
-        $authManager->addChild($user, $update);
+        $accountIndexIndex = $authManager->createPermission('account.index.index');
+        $accountAuthRegister = $authManager->createPermission('account.auth.register');
+        $accountIndexLogin = $authManager->createPermission('account.auth.login');
+        $accountIndexLogout = $authManager->createPermission('account.auth.logout');
+
+        $accountIndexIndex->ruleName = $accountRule->name;
+        $accountAuthRegister->ruleName = $accountRule->name;
+        $accountIndexLogin->ruleName = $accountRule->name;
+        $accountIndexLogout->ruleName = $accountRule->name;
+
+        $authManager->add($accountIndexIndex);
+        $authManager->add($accountAuthRegister);
+        $authManager->add($accountIndexLogin);
+        $authManager->add($accountIndexLogout);
+
+        // Landing module rules
+        $landingRule = new LandingRule();
+        $authManager->add($landingRule);
+
+        $landIndexIndex = $authManager->createPermission('landing.index.index');
+        $landErrorIndex = $authManager->createPermission('landing.error.index');
+
+        $landIndexIndex->ruleName = $landingRule->name;
+        $landErrorIndex->ruleName = $landingRule->name;
+
+        $authManager->add($landIndexIndex);
+        $authManager->add($landErrorIndex);
+
+
+        // GUEST permissions
+        //  account
+        $authManager->addChild($guest, $accountIndexLogin);
+        $authManager->addChild($guest, $accountAuthRegister);
+        //  landing
+        $authManager->addChild($guest, $landIndexIndex);
+        $authManager->addChild($guest, $landErrorIndex);
+
+        // USER permissions
         $authManager->addChild($user, $guest);
+        //  account
+        $authManager->addChild($user, $accountIndexIndex);
+        $authManager->addChild($user, $accountIndexLogout);
 
-        // MANAGER
-        $authManager->addChild($manager, $update);
+        // MANAGER permissions
         $authManager->addChild($manager, $user);
 
-        // ADMIN
-        $authManager->addChild($admin, $delete);
+        // ADMIN permissions
         $authManager->addChild($admin, $manager);
     }
 }

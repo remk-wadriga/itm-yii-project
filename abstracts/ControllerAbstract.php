@@ -18,7 +18,8 @@ abstract class ControllerAbstract extends Controller
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
-            if (Yii::$app->user->can($action->id)) {
+            $rule = $this->module->id . '.' . $this->id . '.' . $action->id;
+            if (!Yii::$app->user->can($rule)) {
                 throw new ForbiddenHttpException('Access denied');
             }
             return true;

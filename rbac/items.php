@@ -1,67 +1,56 @@
 <?php
 return [
-    'login' => [
-        'type' => 2,
-    ],
-    'logout' => [
-        'type' => 2,
-    ],
-    'error' => [
-        'type' => 2,
-    ],
-    'register' => [
-        'type' => 2,
-    ],
-    'index' => [
-        'type' => 2,
-    ],
-    'list' => [
-        'type' => 2,
-    ],
-    'view' => [
-        'type' => 2,
-    ],
-    'update' => [
-        'type' => 2,
-    ],
-    'delete' => [
-        'type' => 2,
-    ],
     'GUEST' => [
         'type' => 1,
-        'ruleName' => 'userGroup',
         'children' => [
-            'login',
-            'logout',
-            'error',
-            'register',
-            'index',
-            'list',
-            'view',
+            'account.auth.login',
+            'account.auth.register',
+            'landing.index.index',
+            'landing.error.index',
         ],
     ],
     'USER' => [
         'type' => 1,
-        'ruleName' => 'userGroup',
         'children' => [
-            'update',
             'GUEST',
+            'account.index.index',
+            'account.auth.logout',
         ],
     ],
     'MANAGER' => [
         'type' => 1,
-        'ruleName' => 'userGroup',
         'children' => [
-            'update',
             'USER',
         ],
     ],
     'ADMIN' => [
         'type' => 1,
-        'ruleName' => 'userGroup',
         'children' => [
-            'delete',
             'MANAGER',
         ],
+    ],
+    'account.index.index' => [
+        'type' => 2,
+        'ruleName' => 'account_rule',
+    ],
+    'account.auth.register' => [
+        'type' => 2,
+        'ruleName' => 'account_rule',
+    ],
+    'account.auth.login' => [
+        'type' => 2,
+        'ruleName' => 'account_rule',
+    ],
+    'account.auth.logout' => [
+        'type' => 2,
+        'ruleName' => 'account_rule',
+    ],
+    'landing.index.index' => [
+        'type' => 2,
+        'ruleName' => 'landing_rule',
+    ],
+    'landing.error.index' => [
+        'type' => 2,
+        'ruleName' => 'landing_rule',
     ],
 ];

@@ -11,4 +11,7 @@ return [
     'account' => [
         'class' => 'account\AccountModule'
     ],
+    'landing' => [
+        'class' => 'landing\LandingModule',
+    ],
 ];
