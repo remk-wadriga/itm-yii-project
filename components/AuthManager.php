@@ -19,6 +19,7 @@ class AuthManager extends PhpManager
     const ROLE_ADMIN = 'ADMIN';
 
     public $defaultRoles = [
+        self::ROLE_GUEST,
         self::ROLE_USER,
         self::ROLE_MANAGER,
         self::ROLE_ADMIN,

@@ -14,75 +14,173 @@ use yii\console\Controller;
 use components\AuthManager;
 use rbac\AccountRule;
 use rbac\LandingRule;
+use rbac\UserGroupRule;
 
 class RbacController extends Controller
 {
+    private static $_permissions = [
+        AuthManager::ROLE_GUEST => [
+            'landing' => [
+                'index' => [
+                    'index',
+                ],
+                'error' => [
+                    'index',
+                ],
+            ],
+            'account' => [
+                'index' => [
+
+                ],
+                'auth' => [
+                    'login',
+                    'register',
+                ],
+            ],
+        ],
+        AuthManager::ROLE_USER => [
+            'role_children' => [AuthManager::ROLE_GUEST],
+            'landing' => [
+                'index' => [
+
+                ],
+                'error' => [
+
+                ],
+            ],
+            'account' => [
+                'index' => [
+                    'index',
+                ],
+                'auth' => [
+                    'logout',
+                ],
+            ],
+        ],
+        AuthManager::ROLE_MANAGER => [
+            'role_children' => [AuthManager::ROLE_USER],
+            'landing' => [
+                'index' => [
+
+                ],
+                'error' => [
+
+                ],
+            ],
+            'account' => [
+                'index' => [
+
+                ],
+                'auth' => [
+
+                ],
+            ],
+        ],
+        AuthManager::ROLE_ADMIN => [
+            'role_children' => [AuthManager::ROLE_MANAGER],
+            'landing' => [
+                'index' => [
+
+                ],
+                'error' => [
+
+                ],
+            ],
+            'account' => [
+                'index' => [
+
+                ],
+                'auth' => [
+
+                ],
+            ],
+        ]
+    ];
+
+    private static function getRules()
+    {
+        return [
+            UserGroupRule::className() => [
+                'roles' => [
+                    AuthManager::ROLE_GUEST,
+                    AuthManager::ROLE_USER,
+                    AuthManager::ROLE_MANAGER,
+                    AuthManager::ROLE_ADMIN,
+                ],
+            ],
+            LandingRule::className() => [
+                'modules' => ['landing'],
+            ],
+            AccountRule::className() => [
+                'modules' => ['account'],
+            ],
+        ];
+    }
+
     public function actionInit()
     {
         $authManager = Yii::$app->authManager;
+        $authManager->removeAll();
 
-        // Create roles
-        $guest  = $authManager->createRole(AuthManager::ROLE_GUEST);
-        $user  = $authManager->createRole(AuthManager::ROLE_USER);
-        $manager = $authManager->createRole(AuthManager::ROLE_MANAGER);
-        $admin  = $authManager->createRole(AuthManager::ROLE_ADMIN);
+        $rules = [];
 
-        $authManager->add($guest);
-        $authManager->add($user);
-        $authManager->add($manager);
-        $authManager->add($admin);
+        foreach(self::getRules() as $className => $rule){
+            $newRule = new $className();
+            $authManager->add($newRule);
+            $rule['rule'] = $newRule;
+            $rules[] = $rule;
+        }
 
-        // Account module rules
-        $accountRule = new AccountRule();
-        $authManager->add($accountRule);
+        foreach(self::$_permissions as $role => $modules){
+            $children = [];
 
-        $accountIndexIndex = $authManager->createPermission('account.index.index');
-        $accountAuthRegister = $authManager->createPermission('account.auth.register');
-        $accountIndexLogin = $authManager->createPermission('account.auth.login');
-        $accountIndexLogout = $authManager->createPermission('account.auth.logout');
+            foreach($modules as $module => $controllers){
+                if($module == 'role_children'){
+                    foreach($controllers as $roleName){
+                        $roles = $authManager->getRoles();
+                        if(!isset($roles[$roleName])){
+                            $newRole = $authManager->createRole($roleName);
+                            $authManager->add($newRole);
+                        }
+                        $children[] = $roleName;
+                    }
+                }else{
+                    foreach($controllers as $controller => $actions){
+                        foreach($actions as $action){
+                            $name = $module . '.' . $controller . '.' . $action;
+                            $newPermission = $authManager->createPermission($name);
+                            foreach($rules as $rulParams){
+                                if(isset($rulParams['modules']) && in_array($module, $rulParams['modules'])){
+                                    $newPermission->ruleName = $rulParams['rule']->name;
+                                }
+                            }
+                            $authManager->add($newPermission);
+                            $children[] = $name;
+                        }
+                    }
+                }
+            }
 
-        $accountIndexIndex->ruleName = $accountRule->name;
-        $accountAuthRegister->ruleName = $accountRule->name;
-        $accountIndexLogin->ruleName = $accountRule->name;
-        $accountIndexLogout->ruleName = $accountRule->name;
+            $roles = $authManager->getRoles();
+            if(!isset($roles[$role])){
+                $newRole = $authManager->createRole($role);
+                $authManager->add($newRole);
+            }
 
-        $authManager->add($accountIndexIndex);
-        $authManager->add($accountAuthRegister);
-        $authManager->add($accountIndexLogin);
-        $authManager->add($accountIndexLogout);
+            $newRole = $authManager->getRole($role);
 
-        // Landing module rules
-        $landingRule = new LandingRule();
-        $authManager->add($landingRule);
+            foreach($rules as $rulParams){
+                if(isset($rulParams['roles']) && in_array($role, $rulParams['roles'])){
+                    $newRole->ruleName = $rulParams['rule']->name;
+                }
+            }
 
-        $landIndexIndex = $authManager->createPermission('landing.index.index');
-        $landErrorIndex = $authManager->createPermission('landing.error.index');
+            $roles = $authManager->getRoles();
 
-        $landIndexIndex->ruleName = $landingRule->name;
-        $landErrorIndex->ruleName = $landingRule->name;
-
-        $authManager->add($landIndexIndex);
-        $authManager->add($landErrorIndex);
-
-
-        // GUEST permissions
-        //  account
-        $authManager->addChild($guest, $accountIndexLogin);
-        $authManager->addChild($guest, $accountAuthRegister);
-        //  landing
-        $authManager->addChild($guest, $landIndexIndex);
-        $authManager->addChild($guest, $landErrorIndex);
-
-        // USER permissions
-        $authManager->addChild($user, $guest);
-        //  account
-        $authManager->addChild($user, $accountIndexIndex);
-        $authManager->addChild($user, $accountIndexLogout);
-
-        // MANAGER permissions
-        $authManager->addChild($manager, $user);
-
-        // ADMIN permissions
-        $authManager->addChild($admin, $manager);
+            foreach($children as $value){
+                $child = isset($roles[$value]) ? $authManager->getRole($value) : $authManager->getPermission($value);
+                $authManager->addChild($newRole, $child);
+            }
+        }
     }
 }

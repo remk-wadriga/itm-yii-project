@@ -17,6 +17,7 @@ use yii\web\User;
  * @package app\components
  *
  * @property string $name
+ * @property string $role
  */
 class UserService extends User
 {
