@@ -14,4 +14,7 @@ return [
     'landing' => [
         'class' => 'landing\LandingModule',
     ],
+    'crm' => [
+        'class' => 'crm\CrmModule',
+    ],
 ];

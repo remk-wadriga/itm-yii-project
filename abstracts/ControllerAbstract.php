@@ -15,6 +15,20 @@ use yii\web\ForbiddenHttpException;
 
 abstract class ControllerAbstract extends Controller
 {
+    /**
+     * ['label' => 'Home', 'url' => ['site/index']],
+     * ['label' => 'Products', 'url' => ['product/index'], 'items' => [
+     *      ['label' => 'New Arrivals', 'url' => ['product/index', 'tag' => 'new']],
+     *      ['label' => 'Most Popular', 'url' => ['product/index', 'tag' => 'popular']],
+     * ]],
+     * ['label' => 'Login', 'url' => ['site/login']],
+     */
+    protected $leftMenuItems = [
+        ['label' => 'CRM', 'url' => '#', 'items' => [
+            ['label' => 'Компании', 'url' => ['/crm/company/list']]
+        ]],
+    ];
+
     public function beforeAction($action)
     {
         if (parent::beforeAction($action)) {
@@ -77,5 +91,10 @@ abstract class ControllerAbstract extends Controller
     public function get($param = null, $default = null)
     {
         return Yii::$app->request->get($param, $default);
+    }
+
+    public function getLeftMenuItems()
+    {
+        return $this->leftMenuItems;
     }
 }

@@ -15,6 +15,7 @@ use components\AuthManager;
 use rbac\AccountRule;
 use rbac\LandingRule;
 use rbac\UserGroupRule;
+use rbac\CrmRule;
 
 class RbacController extends Controller
 {
@@ -54,6 +55,12 @@ class RbacController extends Controller
                 ],
                 'auth' => [
                     'logout',
+                ],
+            ],
+            'crm' => [
+                'company' => [
+                    'index',
+                    'list',
                 ],
             ],
         ],
@@ -113,6 +120,9 @@ class RbacController extends Controller
             ],
             AccountRule::className() => [
                 'modules' => ['account'],
+            ],
+            CrmRule::className() => [
+                'modules' => ['crm'],
             ],
         ];
     }

@@ -11,7 +11,5 @@ class LandingModule extends ModuleAbstract
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
     }
 }

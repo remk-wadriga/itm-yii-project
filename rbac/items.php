@@ -34,6 +34,14 @@ return [
         'type' => 2,
         'ruleName' => 'account_rule',
     ],
+    'crm.company.index' => [
+        'type' => 2,
+        'ruleName' => 'crm_rule',
+    ],
+    'crm.company.list' => [
+        'type' => 2,
+        'ruleName' => 'crm_rule',
+    ],
     'USER' => [
         'type' => 1,
         'ruleName' => 'user_group_rule',
@@ -41,6 +49,8 @@ return [
             'GUEST',
             'account.index.index',
             'account.auth.logout',
+            'crm.company.index',
+            'crm.company.list',
         ],
     ],
     'MANAGER' => [

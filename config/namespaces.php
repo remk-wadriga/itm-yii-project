@@ -10,6 +10,7 @@
 return [
     'account' => 'modules/account',
     'landing' => 'modules/landing',
+    'crm' => 'modules/crm',
     'abstracts' => 'abstracts',
     'assets' => 'assets',
     'commands' => 'commands',
@@ -17,4 +18,5 @@ return [
     'models' => 'models',
     'interfaces' => 'interfaces',
     'rbac' => 'rbac',
+    'widgets' => 'widgets',
 ];

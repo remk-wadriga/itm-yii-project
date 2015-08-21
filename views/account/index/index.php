@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \components\View $this
+ */
+
+$this->params['breadcrumbs'] = ['Аккаунт']
+?>
+
 <div class="account-default-index">
     <h1><?= $this->context->action->uniqueId ?></h1>
     <p>

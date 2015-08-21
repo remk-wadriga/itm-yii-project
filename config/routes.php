@@ -28,6 +28,7 @@ $baseRouting = [
 
 // Including the custom modules routing
 $accountRouting = require(__DIR__ . '/../modules/account/config/routing.php');
-$accountRouting = require(__DIR__ . '/../modules/landing/config/routing.php');
+$landingRouting = require(__DIR__ . '/../modules/landing/config/routing.php');
+$crmRouting = require(__DIR__ . '/../modules/crm/config/routing.php');
 
-return array_merge($accountRouting, $baseRouting);
+return array_merge($accountRouting, $baseRouting, $accountRouting, $landingRouting, $crmRouting);

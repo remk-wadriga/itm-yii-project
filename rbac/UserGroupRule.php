@@ -28,7 +28,6 @@ class UserGroupRule extends RbacRuleAbstract
     {
         $user = Yii::$app->getUser();
         $role = $user->getIsGuest() ? AuthManager::ROLE_GUEST : $user->getIdentity()->role;
-
         return $role == $item->name || $this->recursiveAccessCheck($role, $item->name);
     }
 
