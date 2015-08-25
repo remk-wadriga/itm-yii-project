@@ -60,7 +60,10 @@ class RbacController extends Controller
             'crm' => [
                 'company' => [
                     'index',
+                    'view',
                     'list',
+                    'create',
+                    'update',
                 ],
             ],
         ],

@@ -55,12 +55,12 @@ class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
         return [
             'id' => 'ID',
             'email' => 'Email',
-            'password_hash' => 'Password Hash',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
+            'passwordHash' => 'Password Hash',
+            'firstName' => 'First Name',
+            'lastName' => 'Last Name',
             'phone' => 'Phone',
-            'reg_date' => 'Reg Date',
-            'last_visit_date' => 'Last Visit Date',
+            'regDate' => 'Reg Date',
+            'lastVisitDate' => 'Last Visit Date',
             'role' => 'Role',
             'status' => 'Status',
             'info' => 'Info',
@@ -86,95 +86,64 @@ class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
 
     // Getters and setters
 
-    /**
-     * @param $val
-     * @return $this
-     */
+    // password
     public function setPassword($val)
     {
         if ($this->regDate === null) {
             $this->regDate = Yii::$app->timeService->getCurrentDateTime();
         }
         $this->passwordHash = $this->createPasswordHash($val);
-        return $this;
     }
-
     public function getPassword()
     {
         return $this->password_hash;
     }
 
-    /**
-     * setPasswordHash
-     * @param string $val
-     * @return $this
-     */
+    // passwordHash
     public function setPasswordHash($val)
     {
         $this->password_hash = $val;
-        return $this;
     }
-
     public function getPasswordHash()
     {
         return $this->password_hash;
     }
 
-    /**
-     * @param $val
-     * @return $this
-     */
+    // firstName
     public function setFirstName($val)
     {
         $this->first_name = $val;
-        return $this;
     }
-
     public function getFirstName()
     {
         return $this->first_name;
     }
 
-    /**
-     * @param $val
-     * @return $this
-     */
+    // lastName
     public function setLastName($val)
     {
         $this->last_name = $val;
-        return $this;
     }
-
     public function getLastName()
     {
         return $this->last_name;
     }
 
-    /**
-     * @param $val
-     * @return $this
-     */
+    // lastVisitDate
     public function setLastVisitDate($val)
     {
         $this->last_visit_date = $val;
-        return $this;
     }
-
     public function getLastVisitDate()
     {
         return $this->last_visit_date;
     }
 
-    /**
-     * @param $val
-     * @return $this
-     */
+    // regDate
     public function setRegDate($val)
     {
         $this->reg_date = $val;
-        return $this;
     }
-
     public function getRegDate()
     {
         return $this->reg_date;

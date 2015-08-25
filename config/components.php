@@ -18,7 +18,7 @@ return [
         'cookieValidationKey' => 'hvb6xPBhQBgSjo2TsfOSOoAsKfSguOri',
     ],
     'errorHandler' => [
-        //'errorAction' => 'landing/error',
+        'errorAction' => 'landing/error/index',
     ],
     'cache' => [
         'class' => 'yii\caching\FileCache',

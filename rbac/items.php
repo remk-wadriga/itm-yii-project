@@ -38,7 +38,19 @@ return [
         'type' => 2,
         'ruleName' => 'crm_rule',
     ],
+    'crm.company.view' => [
+        'type' => 2,
+        'ruleName' => 'crm_rule',
+    ],
     'crm.company.list' => [
+        'type' => 2,
+        'ruleName' => 'crm_rule',
+    ],
+    'crm.company.create' => [
+        'type' => 2,
+        'ruleName' => 'crm_rule',
+    ],
+    'crm.company.update' => [
         'type' => 2,
         'ruleName' => 'crm_rule',
     ],
@@ -50,7 +62,10 @@ return [
             'account.index.index',
             'account.auth.logout',
             'crm.company.index',
+            'crm.company.view',
             'crm.company.list',
+            'crm.company.create',
+            'crm.company.update',
         ],
     ],
     'MANAGER' => [

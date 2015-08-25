@@ -3,7 +3,7 @@
  * @var \components\View $this
  */
 
-$this->params['breadcrumbs'] = ['Аккаунт']
+$this->params['breadcrumbs'] = ['Аккаунт'];
 ?>
 
 <div class="account-default-index">

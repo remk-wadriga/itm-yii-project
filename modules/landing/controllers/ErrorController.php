@@ -27,6 +27,10 @@ class ErrorController extends ControllerAbstract
     public function actionIndex()
     {
         $exception = Yii::$app->errorHandler->exception;
+        if($exception->statusCode == 403){
+            return $this->redirect(['/account/auth/login']);
+        }
+
         echo '<pre>'; print_r($exception); exit('</pre>');
 
         return $this->render();

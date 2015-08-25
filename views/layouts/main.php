@@ -73,15 +73,21 @@ MainAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
 
-        <!-- Left menu -->
-        <?php if(!Yii::$app->user->isGuest && isset($leftMenuItems) && !empty($leftMenuItems)): ?>
-            <?= Menu::widget([
-                'items' => $leftMenuItems,
-            ]) ?>
-        <?php endif; ?>
+        <div class="row">
+            <?php if(!Yii::$app->user->isGuest && isset($leftMenuItems) && !empty($leftMenuItems)): ?>
+            <div class="col-md-3">
+                <!-- Left menu -->
+                    <?= Menu::widget([
+                        'items' => $leftMenuItems
+                    ]) ?>
+            </div>
+            <?php endif; ?>
 
-        <!-- Content -->
-        <?= $content ?>
+            <div class="col-md-9">
+                <!-- Content -->
+                <?= $content ?>
+            </div>
+        </div>
 
     </div>
 </div>

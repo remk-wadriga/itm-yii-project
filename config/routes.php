@@ -12,8 +12,8 @@ $baseRouting = [
     '/'                                                                             => 'site/index',
 
     // Modules base routing
-    '<module>'                                                                      => '<module>/index/index',
-    '<module>/<controller><id:\d+>/<action>'                                        => '<module>/<controller>/<action>',
+    '<module>'                                                                      => '<module>/<controller>/<action>',
+    '<module>/<controller>/<id:\d+>/<action>'                                        => '<module>/<controller>/<action>',
     '<module>/<controller>/<id:\d+>'                                                => '<module>/<controller>/view',
     '<module>/<controller>/<action>'                                                => '<module>/<controller>/<action>',
     '<module>/<controller>s'                                                        => '<module>/<controller>/list',
