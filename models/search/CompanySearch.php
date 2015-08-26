@@ -11,9 +11,7 @@ namespace models\search;
 
 use Yii;
 use yii\base\Model;
-use models\User;
 use models\Company;
-use models\CompanyOwnershipType;
 use yii\data\ActiveDataProvider;
 
 
@@ -43,7 +41,6 @@ class CompanySearch extends Company
     public function search($params)
     {
         $query = Company::find()
-            ->select([])
             ->from(['c' => self::tableName()])
             ->joinWith(['user', 'ownership']);
 
