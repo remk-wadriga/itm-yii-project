@@ -13,6 +13,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use models\User;
+use models\CompanyOwnershipType;
 ?>
 
 <div class="form">
@@ -20,8 +22,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name') ?>
-    <?= $form->field($model, 'userId')->dropDownList($model->usersItems) ?>
-    <?= $form->field($model, 'ownershipId')->dropDownList($model->ownershipsItems) ?>
+    <?= $form->field($model, 'userId')->dropDownList(User::getItems()) ?>
+    <?= $form->field($model, 'ownershipId')->dropDownList(CompanyOwnershipType::getItems()) ?>
     <?= $form->field($model, 'edrpou') ?>
     <?= $form->field($model, 'webAddress') ?>
     <?= $form->field($model, 'jurAddress') ?>

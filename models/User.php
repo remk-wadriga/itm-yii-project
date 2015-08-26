@@ -26,12 +26,15 @@ use yii\web\UserEvent;
  * @property string $passwordHash
  * @property string $firstName
  * @property string $lastName
+ * @property string $fullName
  * @property string $regDate
  * @property string $lastVisitDate
  * @property string $password
  */
 class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
 {
+    private static $_items;
+
     public static function tableName()
     {
         return 'user';
@@ -149,6 +152,11 @@ class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
         return $this->reg_date;
     }
 
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
     // END Getters and setters
 
 
@@ -162,6 +170,15 @@ class User extends ModelAbstract implements IdentityInterface, UserAuthInterface
     protected function createPasswordHash($password)
     {
         return hash(Yii::$app->params['crypt_alo'], $password . $this->regDate . Yii::$app->params['salt']);
+    }
+
+
+    protected static function getItemsNames()
+    {
+        return [
+            'id',
+            'name' => 'CONCAT_WS(\' \', `first_name`, `last_name`)',
+        ];
     }
 
     // END Protected methods

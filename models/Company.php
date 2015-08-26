@@ -36,6 +36,8 @@ use abstracts\ModelAbstract;
  * @property string $phyAddress
  * @property string $createDate
  * @property string $lastEditTime
+ * @property string $userName
+ * @property string $ownershipName
  *
  * @property array $usersItems
  * @property array $ownershipsItems
@@ -45,9 +47,6 @@ class Company extends ModelAbstract
     private $_usersItems;
 
     private $_ownershipsItems;
-    
-    public $userName;
-    public $ownershipName;
 
     public static function tableName()
     {
@@ -60,9 +59,9 @@ class Company extends ModelAbstract
             [['name', 'edrpou', 'web_address', 'jur_address', 'phy_address'], 'required'],
             [['user_id', 'ownership_id', 'userId', 'ownershipId', 'edrpou'], 'integer'],
             [['description'], 'string'],
-            [['create_date', 'last_edit_time', 'createDate', 'lastEditTime', 'userName', 'ownershipName'], 'safe'],
             [['name', 'web_address', 'jur_address', 'phy_address', 'webAddress', 'jurAddress', 'phyAddress'], 'string', 'max' => 255],
-            [['postcode', 'postbox'], 'string', 'max' => 8]
+            [['postcode', 'postbox'], 'string', 'max' => 8],
+            [['create_date', 'last_edit_time', 'createDate', 'lastEditTime'], 'safe'],
         ];
     }
 
@@ -96,7 +95,7 @@ class Company extends ModelAbstract
      */
     public function getCompanyToSpheres()
     {
-        return $this->hasMany(CompanyToSphere::className(), ['company_id' => 'id']);
+        return $this->hasMany(CompanyToSphere::className(), ['company_id' => 'id'])->from(['cts' => CompanyToSphere::tableName()]);
     }
 
     /**
@@ -104,7 +103,7 @@ class Company extends ModelAbstract
      */
     public function getSpheres()
     {
-        return $this->hasMany(CompanySphere::className(), ['id' => 'sphere_id'])->viaTable('company_to_sphere', ['company_id' => 'id']);
+        return $this->hasMany(CompanySphere::className(), ['id' => 'sphere_id'])->viaTable(CompanyToSphere::tableName(), ['company_id' => 'id'])->from(['cs' => CompanySphere::tableName()]);
     }
 
     /**
@@ -112,7 +111,7 @@ class Company extends ModelAbstract
      */
     public function getOwnership()
     {
-        return $this->hasOne(CompanyOwnershipType::className(), ['id' => 'ownership_id']);
+        return $this->hasOne(CompanyOwnershipType::className(), ['id' => 'ownership_id'])->from(['ot' => CompanyOwnershipType::tableName()]);
     }
 
     /**
@@ -120,7 +119,7 @@ class Company extends ModelAbstract
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id'])->from(['u' => User::tableName()]);
     }
 
     /**
@@ -128,7 +127,7 @@ class Company extends ModelAbstract
      */
     public function getCompanyRequisites()
     {
-        return $this->hasMany(CompanyRequisite::className(), ['company_id' => 'id']);
+        return $this->hasMany(CompanyRequisite::className(), ['company_id' => 'id'])->from(['cr' => CompanyRequisite::tableName()]);
     }
 
     /**
@@ -136,7 +135,7 @@ class Company extends ModelAbstract
      */
     public function getDepartments()
     {
-        return $this->hasMany(Department::className(), ['company_id' => 'id']);
+        return $this->hasMany(Department::className(), ['company_id' => 'id'])->from(['dep' => Department::tableName()]);
     }
 
     // END Depending
@@ -236,73 +235,22 @@ class Company extends ModelAbstract
         return $this->last_edit_time;
     }
 
+    //userName
+    public function getUserName()
+    {
+        return $this->user->fullName;
+    }
+
+    //ownershipName
+    public function getOwnershipName()
+    {
+        return $this->ownership->name;
+    }
+
     // END Getters and setters
 
 
     // Public methods
-
-    /**
-     * getUsersItems
-     * @return array
-     */
-    public function getUsersItems()
-    {
-        if ($this->_usersItems !== null) {
-            return $this->_usersItems;
-        }
-        $this->_usersItems = [
-            0 => '---',
-        ];
-
-        $users = User::find()
-            ->select([
-                'id',
-                'first_name',
-                'last_name',
-            ])
-            ->orderBy('first_name')
-            ->asArray()
-            ->all();
-
-        if (!empty($users)) {
-            foreach($users as $user){
-                $this->_usersItems[$user['id']] = $user['first_name'] . ' ' . $user['last_name'];
-            }
-        }
-
-        return $this->_usersItems;
-    }
-
-    /**
-     * getOwnershipsItems
-     * @return array
-     */
-    public function getOwnershipsItems()
-    {
-        if ($this->_ownershipsItems !== null) {
-            return $this->_ownershipsItems;
-        }
-        $this->_ownershipsItems = [
-            0 => '---',
-        ];
-
-        $ownerships = CompanyOwnershipType::find()
-            ->select([
-                'id',
-                'name',
-            ])
-            ->orderBy('name')
-            ->asArray()
-            ->all();
-
-        if (!empty($ownerships)) {
-            foreach($ownerships as $ownership){
-                $this->_ownershipsItems[$ownership['id']] = $ownership['name'];
-            }
-        }
-
-        return $this->_ownershipsItems;
-    }
 
     // END Public methods
 

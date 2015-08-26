@@ -19,6 +19,9 @@ use yii\data\ActiveDataProvider;
 
 class CompanySearch extends Company
 {
+    public $userName;
+    public $ownershipName;
+
     public function rules()
     {
         return [
@@ -40,14 +43,9 @@ class CompanySearch extends Company
     public function search($params)
     {
         $query = Company::find()
-            ->select([
-                'c.*',
-                'userName' => 'CONCAT_WS(\' \', `u`.`first_name`, `u`.`last_name`)',
-                'ownershipName' => 'o.name',
-            ])
+            ->select([])
             ->from(['c' => self::tableName()])
-            ->leftJoin(['u' => User::tableName()], 'u.id = c.user_id')
-            ->leftJoin(['o' => CompanyOwnershipType::tableName()], 'o.id = c.ownership_id');
+            ->joinWith(['user', 'ownership']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,8 +53,24 @@ class CompanySearch extends Company
                 'attributes' => [
                     'id',
                     'name',
-                    'userName',
-                    'ownershipName',
+                    'userName' => [
+                        'asc' => [
+                            'u.first_name' => SORT_ASC,
+                            'u.last_name' => SORT_ASC,
+                        ],
+                        'desc' => [
+                            'u.first_name' => SORT_DESC,
+                            'u.last_name' => SORT_DESC,
+                        ],
+                    ],
+                    'ownershipName' => [
+                        'asc' => [
+                            'ot.name' => SORT_ASC,
+                        ],
+                        'desc' => [
+                            'ot.name' => SORT_DESC,
+                        ],
+                    ],
                     'edrpou',
                 ],
             ],
@@ -77,7 +91,7 @@ class CompanySearch extends Company
             ->andFilterWhere(['like', 'c.name', $this->name])
             ->andFilterWhere(['like', 'u.first_name', $this->userName])
             ->orFilterWhere(['like', 'u.last_name', $this->userName])
-            ->andFilterWhere(['like', 'o.name', $this->ownershipName]);
+            ->andFilterWhere(['like', 'ot.name', $this->ownershipName]);
 
         return $dataProvider;
     }

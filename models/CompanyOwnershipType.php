@@ -16,6 +16,8 @@ use abstracts\ModelAbstract;
  */
 class CompanyOwnershipType extends ModelAbstract
 {
+    private static $_tems;
+
     public static function tableName()
     {
         return 'company_ownership_type';
