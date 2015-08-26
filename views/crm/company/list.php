@@ -1,21 +1,41 @@
 <?php
 /**
- * Created by Rem.
- * Author: Dmitry Kushneriv
- * Email: remkwadriga@yandex.ua
- * Date: 21-08-2015
- * Time: 14:24 PM
- *
- * @var \components\View $this
- * @var \models\Company[] $companies
+ * @var components\View $this
+ * @var models\search\CompanySearch $searchModel
+ * @var yii\data\ActiveDataProvider $dataProvider
  */
 
 use yii\helpers\Html;
+use yii\grid\GridView;
+use widgets\pjax\Pjax;
 
-$this->params['breadcrumbs'] = ['Компании'];
+$this->title = 'Companies';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="company-index">
 
-<?= Html::a('Создать компанию', ['/crm/company/create'], ['class' => 'btn btn-primary']) ?>
+    <h1><?= Html::encode($this->title) ?></h1>
 
+    <p>
+        <?= Html::a('Create Company', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-<h1>Companies</h1>
+    <?php Pjax::begin() ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'name',
+            'userName',
+            'ownershipName',
+            'edrpou',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+    <?php Pjax::end() ?>
+
+</div>

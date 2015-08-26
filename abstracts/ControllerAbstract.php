@@ -93,6 +93,11 @@ abstract class ControllerAbstract extends Controller
         return Yii::$app->request->get($param, $default);
     }
 
+    public function params()
+    {
+        return Yii::$app->getRequest()->getQueryParams();
+    }
+
     public function getLeftMenuItems()
     {
         return $this->leftMenuItems;

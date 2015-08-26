@@ -44,7 +44,10 @@ class Company extends ModelAbstract
 {
     private $_usersItems;
 
-    private $_ownershipsItms;
+    private $_ownershipsItems;
+    
+    public $userName;
+    public $ownershipName;
 
     public static function tableName()
     {
@@ -57,7 +60,7 @@ class Company extends ModelAbstract
             [['name', 'edrpou', 'web_address', 'jur_address', 'phy_address'], 'required'],
             [['user_id', 'ownership_id', 'userId', 'ownershipId', 'edrpou'], 'integer'],
             [['description'], 'string'],
-            [['create_date', 'last_edit_time', 'createDate', 'lastEditTime'], 'safe'],
+            [['create_date', 'last_edit_time', 'createDate', 'lastEditTime', 'userName', 'ownershipName'], 'safe'],
             [['name', 'web_address', 'jur_address', 'phy_address', 'webAddress', 'jurAddress', 'phyAddress'], 'string', 'max' => 255],
             [['postcode', 'postbox'], 'string', 'max' => 8]
         ];
@@ -79,6 +82,8 @@ class Company extends ModelAbstract
             'description' => 'Description',
             'createDate' => 'Create Date',
             'lastEditTime' => 'Last Edit Time',
+            'userName' => 'User',
+            'ownershipName' => 'Ownership'
         ];
     }
 
@@ -274,10 +279,10 @@ class Company extends ModelAbstract
      */
     public function getOwnershipsItems()
     {
-        if ($this->_ownershipsItms !== null) {
-            return $this->_ownershipsItms;
+        if ($this->_ownershipsItems !== null) {
+            return $this->_ownershipsItems;
         }
-        $this->_ownershipsItms = [
+        $this->_ownershipsItems = [
             0 => '---',
         ];
 
@@ -292,11 +297,11 @@ class Company extends ModelAbstract
 
         if (!empty($ownerships)) {
             foreach($ownerships as $ownership){
-                $this->_ownershipsItms[$ownership['id']] = $ownership['name'];
+                $this->_ownershipsItems[$ownership['id']] = $ownership['name'];
             }
         }
 
-        return $this->_ownershipsItms;
+        return $this->_ownershipsItems;
     }
 
     // END Public methods

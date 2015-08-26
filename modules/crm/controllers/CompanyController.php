@@ -9,6 +9,7 @@
 
 namespace crm\controllers;
 
+use models\search\CompanySearch;
 use Yii;
 use crm\abstracts\ControllerAbstract;
 use models\Company;
@@ -25,7 +26,13 @@ class CompanyController extends ControllerAbstract
 
     public function actionList()
     {
-        return $this->render();
+        $searchModel = new CompanySearch();
+        $dataProvider = $searchModel->search($this->params());
+
+        return $this->render([
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionCreate()

@@ -9,15 +9,14 @@
 
 $baseRouting = [
     // Landing page
-    '/'                                                                             => 'site/index',
+    '/'                                                                             => 'landing/index/index',
 
     // Modules base routing
-    '<module>'                                                                      => '<module>/<controller>/<action>',
-    '<module>/<controller>/<id:\d+>/<action>'                                        => '<module>/<controller>/<action>',
+    '<module>/<controller>/<id:\d+>/<action>'                                       => '<module>/<controller>/<action>',
     '<module>/<controller>/<id:\d+>'                                                => '<module>/<controller>/view',
     '<module>/<controller>/<action>'                                                => '<module>/<controller>/<action>',
     '<module>/<controller>s'                                                        => '<module>/<controller>/list',
-
+    '<module>'                                                                      => '<module>/index/index',
 
     // Base Routing
     '<controller>/<id:\d+>/<action>'                                                => '<controller>/<action>',
